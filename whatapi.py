@@ -1234,7 +1234,10 @@ class Parser(object):
             tagsartist = []
             similarartists = []
             soup = BeautifulSoup(str(dom))
-            for releasetype in soup.fetch('table',{'class':'torrent_table'}):
+            soupfetch = soup.fetch('table',{'class':'torrent_table'})
+            if not soupfetch:
+                soupfetch = soup.fetch('table',{'class':'torrent_table grouped release_table'})
+            for releasetype in soupfetch:
                 releasetypenames = releasetype.findAll('strong')
                 releasetypename = releasetype.findAll('strong')[0].string
                 for release in releasetypenames[1:-1]:
